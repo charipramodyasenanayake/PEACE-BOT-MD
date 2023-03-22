@@ -17,12 +17,18 @@ module.exports = {
       );
     var LyricssearchTerm = args.join(" ");
 
+    axios.get(songLink)
+  .then(response => {
+    const $ = cheerio.load(response.data);
+    const lyrics = $('.entry-content > p').text().trim();})
+
     const searchQuery = (LyricssearchTerm);
     axios.get(`https://sinhalasonglyrics.com/?s=${LyricssearchTerm}&submit=Search`)
   .then(response => {
     const $ = cheerio.load(response.data);
     const firstResult = $('.entry-title > a').first();
     const songTitle = firstResult.text().trim();
+    const songLink = firstResult.attr('href');
   })
 
   axios.get(songLink)
