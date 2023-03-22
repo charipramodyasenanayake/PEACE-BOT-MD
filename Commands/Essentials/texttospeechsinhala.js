@@ -17,7 +17,7 @@ module.exports = {
     }
 
     const texttospeechurl = ttt.getAudioUrl(message, {
-      lang: "hi",
+      lang: "si",
       slow: false,
       host: "https://translate.google.com",
     });
