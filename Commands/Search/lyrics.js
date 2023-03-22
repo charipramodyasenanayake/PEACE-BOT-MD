@@ -1,4 +1,5 @@
-const { lyrics, lyricsv2 } = require("@bochilteam/scraper");
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 module.exports = {
   name: "lyrics",
@@ -16,11 +17,21 @@ module.exports = {
       );
     var LyricssearchTerm = args.join(" ");
 
-    const resultlyrics = await lyrics(LyricssearchTerm).catch(
-      async (_) => await lyricsv2(LyricssearchTerm)
-    );
+    const searchQuery = (LyricssearchTerm);
+    axios.get(`https://sinhalasonglyrics.com/?s=${LyricssearchTerm}&submit=Search`)
+  .then(response => {
+    const $ = cheerio.load(response.data);
+    const firstResult = $('.entry-title > a').first();
+    const songTitle = firstResult.text().trim();
+    const songLink = firstResult.attr('href');
+  })
 
-    let resText = `  *『  PEACE MD Lyrics Search  』*\n\n\n💭 _Search Term:_ *${LyricssearchTerm}*\n\n\n*🍭 Lyrics:* \n\n${resultlyrics.lyrics}\n\n`;
+  axios.get(songLink)
+  .then(response => {
+    const $ = cheerio.load(response.data);
+    const lyrics = $('.entry-content > p').text().trim();})
+
+    let resText = `  *『  PEACE MD Lyrics Search  』*\n\n\n💭 _Search Term:_ *${LyricssearchTerm}*\n🔰 Song Title: ${songTitle}\n\n*💭 Lyrics: * \n\n${lyrics}\n\n`;
 
     await Miku.sendMessage(
       m.from,
