@@ -23,7 +23,6 @@ module.exports = {
     const $ = cheerio.load(response.data);
     const firstResult = $('.entry-title > a').first();
     const songTitle = firstResult.text().trim();
-    const songLink = firstResult.attr('href');
   })
 
   axios.get(songLink)
