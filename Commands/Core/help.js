@@ -1,3 +1,5 @@
+const speed = require('performance-now')
+const moment = require('moment-timezone')
 module.exports = {
   name: "help",
   alias: ["menu", "list", "මෙනු", "මෙනුව"],
