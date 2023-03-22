@@ -7,7 +7,11 @@ module.exports = {
   usage: `apk <search term>`,
   react: "🔎",
   start: async (Miku, m, { text, prefix, args }) => {
-      if (!args.join(" ")) return replay(`Example : ${prefix + command} Kinemaster`)
+      if (!args.join(" "))
+        m.from,
+        { text: `Example : ${prefix + command} Kinemaster` },
+        { quoted: m }
+
       yogipw.happymod(args.join(" ")).then(async(res) => {
       teks = '「 PEACE MD Mod Search  」'
       for (let i of res) {
