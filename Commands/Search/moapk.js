@@ -1,4 +1,4 @@
-
+const yogipw = require("tod-api")
 module.exports = {
   name: "mod",
   alias: ["modapk"],
